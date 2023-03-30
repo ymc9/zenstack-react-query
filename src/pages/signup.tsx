@@ -4,18 +4,17 @@ import type { NextPage } from "next";
 import { signIn } from "next-auth/react";
 import Router from "next/router";
 import { useState, type FormEvent } from "react";
-import { useUser } from "../lib/hooks";
+import { useCreateUser } from "../lib/hooks";
 
 const Signup: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { create: signup } = useUser();
-  const signupMutate = signup();
+  const signup = useCreateUser();
 
   async function onSignup(e: FormEvent) {
     e.preventDefault();
     try {
-      await signupMutate.mutateAsync({ data: { email, password } });
+      await signup.mutateAsync({ data: { email, password } });
     } catch (err: any) {
       console.error(err);
       if (err.info?.prisma && err.info?.code === "P2002") {

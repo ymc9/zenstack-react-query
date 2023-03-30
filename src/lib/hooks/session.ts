@@ -5,96 +5,193 @@ import { RequestHandlerContext } from '@zenstackhq/react/runtime';
 import * as request from '@zenstackhq/react/runtime/react-query';
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 
-export function useSession() {
+export function useCreateSession(options?: Omit<UseMutationOptions<Session, unknown, Prisma.SessionCreateArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.postMutation<Prisma.SessionCreateArgs, Session>('Session', `${endpoint}/Session/create`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.SessionCreateArgs>(
+            args: Prisma.SelectSubset<T, Prisma.SessionCreateArgs>,
+            options?: Omit<UseMutationOptions<Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>, unknown, Prisma.SelectSubset<T, Prisma.SessionCreateArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>;
+        },
+    };
+    return mutation;
+}
 
-    function create<T extends Prisma.SessionCreateArgs>(options?: Omit<UseMutationOptions<Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>, unknown, Prisma.SelectSubset<T, Prisma.SessionCreateArgs>>, 'mutationFn'>) {
-        return request.postMutate<Prisma.SelectSubset<T, Prisma.SessionCreateArgs>, Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>>(`${endpoint}/session/create`, options);
-    }
+export function useFindManySession<T extends Prisma.SessionFindManyArgs>(args?: Prisma.SelectSubset<T, Prisma.SessionFindManyArgs>, options?: UseQueryOptions<Array<Prisma.SessionGetPayload<T>>>) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    return request.query<Array<Prisma.SessionGetPayload<T>>>('Session', `${endpoint}/Session/findMany`, args, options);
+}
 
-    function findMany<T extends Prisma.SessionFindManyArgs>(args?: Prisma.SelectSubset<T, Prisma.SessionFindManyArgs>, options?: UseQueryOptions<Array<Prisma.SessionGetPayload<T>>>) {
-        return request.get<Array<Prisma.SessionGetPayload<T>>>('Session', `${endpoint}/session/findMany`, args, options);
-    }
+export function useFindUniqueSession<T extends Prisma.SessionFindUniqueArgs>(args: Prisma.SelectSubset<T, Prisma.SessionFindUniqueArgs>, options?: UseQueryOptions<Prisma.SessionGetPayload<T>>) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    return request.query<Prisma.SessionGetPayload<T>>('Session', `${endpoint}/Session/findUnique`, args, options);
+}
 
-    function findUnique<T extends Prisma.SessionFindUniqueArgs>(args: Prisma.SelectSubset<T, Prisma.SessionFindUniqueArgs>, options?: UseQueryOptions<Prisma.SessionGetPayload<T>>) {
-        return request.get<Prisma.SessionGetPayload<T>>('Session', `${endpoint}/session/findUnique`, args, options);
-    }
+export function useFindFirstSession<T extends Prisma.SessionFindFirstArgs>(args?: Prisma.SelectSubset<T, Prisma.SessionFindFirstArgs>, options?: UseQueryOptions<Prisma.SessionGetPayload<T>>) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    return request.query<Prisma.SessionGetPayload<T>>('Session', `${endpoint}/Session/findFirst`, args, options);
+}
 
-    function findFirst<T extends Prisma.SessionFindFirstArgs>(args: Prisma.SelectSubset<T, Prisma.SessionFindFirstArgs>, options?: UseQueryOptions<Prisma.SessionGetPayload<T>>) {
-        return request.get<Prisma.SessionGetPayload<T>>('Session', `${endpoint}/session/findFirst`, args, options);
-    }
+export function useUpdateSession(options?: Omit<UseMutationOptions<Session, unknown, Prisma.SessionUpdateArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.putMutation<Prisma.SessionUpdateArgs, Session>('Session', `${endpoint}/Session/update`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.SessionUpdateArgs>(
+            args: Prisma.SelectSubset<T, Prisma.SessionUpdateArgs>,
+            options?: Omit<UseMutationOptions<Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>, unknown, Prisma.SelectSubset<T, Prisma.SessionUpdateArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>;
+        },
+    };
+    return mutation;
+}
 
-    function update<T extends Prisma.SessionUpdateArgs>(options?: Omit<UseMutationOptions<Prisma.SessionGetPayload<T>, unknown, Prisma.SelectSubset<T, Prisma.SessionUpdateArgs>>, 'mutationFn'>) {
-        return request.putMutate<Prisma.SelectSubset<T, Prisma.SessionUpdateArgs>, Prisma.SessionGetPayload<T>>(`${endpoint}/session/update`, options);
-    }
+export function useUpdateManySession(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SessionUpdateManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.putMutation<Prisma.SessionUpdateManyArgs, Prisma.BatchPayload>('Session', `${endpoint}/Session/updateMany`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.SessionUpdateManyArgs>(
+            args: Prisma.SelectSubset<T, Prisma.SessionUpdateManyArgs>,
+            options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SelectSubset<T, Prisma.SessionUpdateManyArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.BatchPayload;
+        },
+    };
+    return mutation;
+}
 
-    function updateMany<T extends Prisma.SessionUpdateManyArgs>(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SelectSubset<T, Prisma.SessionUpdateManyArgs>>, 'mutationFn'>) {
-        return request.putMutate<Prisma.SelectSubset<T, Prisma.SessionUpdateManyArgs>, Prisma.BatchPayload>(`${endpoint}/session/updateMany`, options);
-    }
+export function useUpsertSession(options?: Omit<UseMutationOptions<Session, unknown, Prisma.SessionUpsertArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.postMutation<Prisma.SessionUpsertArgs, Session>('Session', `${endpoint}/Session/upsert`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.SessionUpsertArgs>(
+            args: Prisma.SelectSubset<T, Prisma.SessionUpsertArgs>,
+            options?: Omit<UseMutationOptions<Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>, unknown, Prisma.SelectSubset<T, Prisma.SessionUpsertArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>;
+        },
+    };
+    return mutation;
+}
 
-    function upsert<T extends Prisma.SessionUpsertArgs>(options?: Omit<UseMutationOptions<Prisma.SessionGetPayload<T>, unknown, Prisma.SelectSubset<T, Prisma.SessionUpsertArgs>>, 'mutationFn'>) {
-        return request.postMutate<Prisma.SelectSubset<T, Prisma.SessionUpsertArgs>, Prisma.SessionGetPayload<T>>(`${endpoint}/session/upsert`, options);
-    }
+export function useDeleteSession(options?: Omit<UseMutationOptions<Session, unknown, Prisma.SessionDeleteArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.deleteMutation<Prisma.SessionDeleteArgs, Session>('Session', `${endpoint}/Session/delete`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.SessionDeleteArgs>(
+            args: Prisma.SelectSubset<T, Prisma.SessionDeleteArgs>,
+            options?: Omit<UseMutationOptions<Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>, unknown, Prisma.SelectSubset<T, Prisma.SessionDeleteArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.CheckSelect<T, Session, Prisma.SessionGetPayload<T>>;
+        },
+    };
+    return mutation;
+}
 
-    function del<T extends Prisma.SessionDeleteArgs>(options?: Omit<UseMutationOptions<Prisma.SessionGetPayload<T>, unknown, Prisma.SelectSubset<T, Prisma.SessionDeleteArgs>>, 'mutationFn'>) {
-        return request.delMutate<Prisma.SelectSubset<T, Prisma.SessionDeleteArgs>, Prisma.SessionGetPayload<T>>(`${endpoint}/session/delete`, options);
-    }
+export function useDeleteManySession(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SessionDeleteManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.deleteMutation<Prisma.SessionDeleteManyArgs, Prisma.BatchPayload>('Session', `${endpoint}/Session/deleteMany`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.SessionDeleteManyArgs>(
+            args: Prisma.SelectSubset<T, Prisma.SessionDeleteManyArgs>,
+            options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SelectSubset<T, Prisma.SessionDeleteManyArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.BatchPayload;
+        },
+    };
+    return mutation;
+}
 
-    function deleteMany<T extends Prisma.SessionDeleteManyArgs>(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SelectSubset<T, Prisma.SessionDeleteManyArgs>>, 'mutationFn'>) {
-        return request.delMutate<Prisma.SelectSubset<T, Prisma.SessionDeleteManyArgs>, Prisma.BatchPayload>(`${endpoint}/session/deleteMany`, options);
-    }
+export function useAggregateSession<T extends Prisma.SessionAggregateArgs>(args: Prisma.SelectSubset<T, Prisma.SessionAggregateArgs>, options?: UseQueryOptions<Prisma.GetSessionAggregateType<T>>) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    return request.query<Prisma.GetSessionAggregateType<T>>('Session', `${endpoint}/Session/aggregate`, args, options);
+}
 
-    function aggregate<T extends Prisma.SessionAggregateArgs>(args: Prisma.Subset<T, Prisma.SessionAggregateArgs>, options?: UseQueryOptions<Prisma.GetSessionAggregateType<T>>) {
-        return request.get<Prisma.GetSessionAggregateType<T>>('Session', `${endpoint}/session/aggregate`, args, options);
-    }
+export function useGroupBySession<T extends Prisma.SessionGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: Prisma.UserGroupByArgs['orderBy'] } : { orderBy?: Prisma.UserGroupByArgs['orderBy'] }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.TupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True
+    ? `Error: "by" must not be empty.`
+    : HavingValid extends Prisma.False
+    ? {
+        [P in HavingFields]: P extends ByFields
+        ? never
+        : P extends string
+        ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+        : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`,
+        ]
+    }[HavingFields]
+    : 'take' extends Prisma.Keys<T>
+    ? 'orderBy' extends Prisma.Keys<T>
+    ? ByValid extends Prisma.True
+    ? {}
+    : {
+        [P in OrderFields]: P extends ByFields
+        ? never
+        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+    }[OrderFields]
+    : 'Error: If you provide "take", you also need to provide "orderBy"'
+    : 'skip' extends Prisma.Keys<T>
+    ? 'orderBy' extends Prisma.Keys<T>
+    ? ByValid extends Prisma.True
+    ? {}
+    : {
+        [P in OrderFields]: P extends ByFields
+        ? never
+        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+    }[OrderFields]
+    : 'Error: If you provide "skip", you also need to provide "orderBy"'
+    : ByValid extends Prisma.True
+    ? {}
+    : {
+        [P in OrderFields]: P extends ByFields
+        ? never
+        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+    }[OrderFields]>(args: Prisma.SelectSubset<T, Prisma.SubsetIntersection<T, Prisma.SessionGroupByArgs, OrderByArg> & InputErrors>, options?: UseQueryOptions<{} extends InputErrors ? Prisma.GetSessionGroupByPayload<T> : InputErrors>) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    return request.query<{} extends InputErrors ? Prisma.GetSessionGroupByPayload<T> : InputErrors>('Session', `${endpoint}/Session/groupBy`, args, options);
+}
 
-    function groupBy<T extends Prisma.SessionGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: Prisma.UserGroupByArgs['orderBy'] } : { orderBy?: Prisma.UserGroupByArgs['orderBy'] }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.TupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True
-        ? `Error: "by" must not be empty.`
-        : HavingValid extends Prisma.False
-        ? {
-            [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-            ]
-        }[HavingFields]
-        : 'take' extends Prisma.Keys<T>
-        ? 'orderBy' extends Prisma.Keys<T>
-        ? ByValid extends Prisma.True
-        ? {}
-        : {
-            [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-        : 'skip' extends Prisma.Keys<T>
-        ? 'orderBy' extends Prisma.Keys<T>
-        ? ByValid extends Prisma.True
-        ? {}
-        : {
-            [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-        : ByValid extends Prisma.True
-        ? {}
-        : {
-            [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]>(args: Prisma.SubsetIntersection<T, Prisma.SessionGroupByArgs, OrderByArg> & InputErrors, options?: UseQueryOptions<{} extends InputErrors ? Prisma.GetSessionGroupByPayload<T> : InputErrors>) {
-        return request.get<{} extends InputErrors ? Prisma.GetSessionGroupByPayload<T> : InputErrors>('Session', `${endpoint}/session/groupBy`, args, options);
-    }
-
-    function count<T extends Prisma.SessionCountArgs>(args: Prisma.Subset<T, Prisma.SessionCountArgs>, options?: UseQueryOptions<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.SessionCountAggregateOutputType> : number>) {
-        return request.get<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.SessionCountAggregateOutputType> : number>('Session', `${endpoint}/session/count`, args, options);
-    }
-    return { create, findMany, findUnique, findFirst, update, updateMany, upsert, del, deleteMany, aggregate, groupBy, count };
+export function useCountSession<T extends Prisma.SessionCountArgs>(args?: Prisma.SelectSubset<T, Prisma.SessionCountArgs>, options?: UseQueryOptions<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.SessionCountAggregateOutputType> : number>) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    return request.query<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.SessionCountAggregateOutputType> : number>('Session', `${endpoint}/Session/count`, args, options);
 }

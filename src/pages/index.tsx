@@ -3,7 +3,12 @@ import { type NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Router from "next/router";
-import { usePost } from "../lib/hooks";
+import {
+  useCreatePost,
+  useDeletePost,
+  useFindManyPost,
+  useUpdatePost,
+} from "../lib/hooks";
 
 type AuthUser = { id: string; email?: string | null };
 
@@ -40,10 +45,12 @@ const SigninSignup = () => {
 
 const Posts = ({ user }: { user: AuthUser }) => {
   // Post crud hooks
-  const { findMany, create, update, del } = usePost();
+  const create = useCreatePost();
+  const update = useUpdatePost();
+  const del = useDeletePost();
 
   // list all posts that're visible to the current user, together with their authors
-  const { data: posts } = findMany({
+  const { data: posts } = useFindManyPost({
     include: { author: true },
     orderBy: { createdAt: "desc" },
   });
@@ -51,19 +58,23 @@ const Posts = ({ user }: { user: AuthUser }) => {
   async function onCreatePost() {
     const title = prompt("Enter post title");
     if (title) {
-      await create().mutateAsync({ data: { title, authorId: user.id } });
+      const post = await create.mutateAsync({
+        include: { author: true },
+        data: { title: title, authorId: user.id },
+      });
+      console.log("Post created:", post);
     }
   }
 
   async function onTogglePublished(post: Post) {
-    await update().mutateAsync({
+    await update.mutateAsync({
       where: { id: post.id },
       data: { published: !post.published },
     });
   }
 
   async function onDelete(post: Post) {
-    await del().mutateAsync({ where: { id: post.id } });
+    await del.mutateAsync({ where: { id: post.id } });
   }
 
   return (
