@@ -8,7 +8,7 @@ import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 export function useCreateExample(options?: Omit<UseMutationOptions<Example, unknown, Prisma.ExampleCreateArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.postMutation<Prisma.ExampleCreateArgs, Example>('Example', `${endpoint}/Example/create`, options, invalidateQueries)
+        request.postMutation<Prisma.ExampleCreateArgs, Example>('Example', `${endpoint}/example/create`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -25,25 +25,45 @@ export function useCreateExample(options?: Omit<UseMutationOptions<Example, unkn
     return mutation;
 }
 
+export function useCreateManyExample(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.ExampleCreateManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.postMutation<Prisma.ExampleCreateManyArgs, Prisma.BatchPayload>('Example', `${endpoint}/example/createMany`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.ExampleCreateManyArgs>(
+            args: Prisma.SelectSubset<T, Prisma.ExampleCreateManyArgs>,
+            options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SelectSubset<T, Prisma.ExampleCreateManyArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.BatchPayload;
+        },
+    };
+    return mutation;
+}
+
 export function useFindManyExample<T extends Prisma.ExampleFindManyArgs>(args?: Prisma.SelectSubset<T, Prisma.ExampleFindManyArgs>, options?: UseQueryOptions<Array<Prisma.ExampleGetPayload<T>>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Array<Prisma.ExampleGetPayload<T>>>('Example', `${endpoint}/Example/findMany`, args, options);
+    return request.query<Array<Prisma.ExampleGetPayload<T>>>('Example', `${endpoint}/example/findMany`, args, options);
 }
 
 export function useFindUniqueExample<T extends Prisma.ExampleFindUniqueArgs>(args: Prisma.SelectSubset<T, Prisma.ExampleFindUniqueArgs>, options?: UseQueryOptions<Prisma.ExampleGetPayload<T>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Prisma.ExampleGetPayload<T>>('Example', `${endpoint}/Example/findUnique`, args, options);
+    return request.query<Prisma.ExampleGetPayload<T>>('Example', `${endpoint}/example/findUnique`, args, options);
 }
 
 export function useFindFirstExample<T extends Prisma.ExampleFindFirstArgs>(args?: Prisma.SelectSubset<T, Prisma.ExampleFindFirstArgs>, options?: UseQueryOptions<Prisma.ExampleGetPayload<T>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Prisma.ExampleGetPayload<T>>('Example', `${endpoint}/Example/findFirst`, args, options);
+    return request.query<Prisma.ExampleGetPayload<T>>('Example', `${endpoint}/example/findFirst`, args, options);
 }
 
 export function useUpdateExample(options?: Omit<UseMutationOptions<Example, unknown, Prisma.ExampleUpdateArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.putMutation<Prisma.ExampleUpdateArgs, Example>('Example', `${endpoint}/Example/update`, options, invalidateQueries)
+        request.putMutation<Prisma.ExampleUpdateArgs, Example>('Example', `${endpoint}/example/update`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -63,7 +83,7 @@ export function useUpdateExample(options?: Omit<UseMutationOptions<Example, unkn
 export function useUpdateManyExample(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.ExampleUpdateManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.putMutation<Prisma.ExampleUpdateManyArgs, Prisma.BatchPayload>('Example', `${endpoint}/Example/updateMany`, options, invalidateQueries)
+        request.putMutation<Prisma.ExampleUpdateManyArgs, Prisma.BatchPayload>('Example', `${endpoint}/example/updateMany`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -83,7 +103,7 @@ export function useUpdateManyExample(options?: Omit<UseMutationOptions<Prisma.Ba
 export function useUpsertExample(options?: Omit<UseMutationOptions<Example, unknown, Prisma.ExampleUpsertArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.postMutation<Prisma.ExampleUpsertArgs, Example>('Example', `${endpoint}/Example/upsert`, options, invalidateQueries)
+        request.postMutation<Prisma.ExampleUpsertArgs, Example>('Example', `${endpoint}/example/upsert`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -103,7 +123,7 @@ export function useUpsertExample(options?: Omit<UseMutationOptions<Example, unkn
 export function useDeleteExample(options?: Omit<UseMutationOptions<Example, unknown, Prisma.ExampleDeleteArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.deleteMutation<Prisma.ExampleDeleteArgs, Example>('Example', `${endpoint}/Example/delete`, options, invalidateQueries)
+        request.deleteMutation<Prisma.ExampleDeleteArgs, Example>('Example', `${endpoint}/example/delete`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -123,7 +143,7 @@ export function useDeleteExample(options?: Omit<UseMutationOptions<Example, unkn
 export function useDeleteManyExample(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.ExampleDeleteManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.deleteMutation<Prisma.ExampleDeleteManyArgs, Prisma.BatchPayload>('Example', `${endpoint}/Example/deleteMany`, options, invalidateQueries)
+        request.deleteMutation<Prisma.ExampleDeleteManyArgs, Prisma.BatchPayload>('Example', `${endpoint}/example/deleteMany`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -142,7 +162,7 @@ export function useDeleteManyExample(options?: Omit<UseMutationOptions<Prisma.Ba
 
 export function useAggregateExample<T extends Prisma.ExampleAggregateArgs>(args: Prisma.SelectSubset<T, Prisma.ExampleAggregateArgs>, options?: UseQueryOptions<Prisma.GetExampleAggregateType<T>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Prisma.GetExampleAggregateType<T>>('Example', `${endpoint}/Example/aggregate`, args, options);
+    return request.query<Prisma.GetExampleAggregateType<T>>('Example', `${endpoint}/example/aggregate`, args, options);
 }
 
 export function useGroupByExample<T extends Prisma.ExampleGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: Prisma.UserGroupByArgs['orderBy'] } : { orderBy?: Prisma.UserGroupByArgs['orderBy'] }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.TupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True
@@ -188,10 +208,10 @@ export function useGroupByExample<T extends Prisma.ExampleGroupByArgs, HasSelect
         : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
     }[OrderFields]>(args: Prisma.SelectSubset<T, Prisma.SubsetIntersection<T, Prisma.ExampleGroupByArgs, OrderByArg> & InputErrors>, options?: UseQueryOptions<{} extends InputErrors ? Prisma.GetExampleGroupByPayload<T> : InputErrors>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<{} extends InputErrors ? Prisma.GetExampleGroupByPayload<T> : InputErrors>('Example', `${endpoint}/Example/groupBy`, args, options);
+    return request.query<{} extends InputErrors ? Prisma.GetExampleGroupByPayload<T> : InputErrors>('Example', `${endpoint}/example/groupBy`, args, options);
 }
 
 export function useCountExample<T extends Prisma.ExampleCountArgs>(args?: Prisma.SelectSubset<T, Prisma.ExampleCountArgs>, options?: UseQueryOptions<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.ExampleCountAggregateOutputType> : number>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.ExampleCountAggregateOutputType> : number>('Example', `${endpoint}/Example/count`, args, options);
+    return request.query<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.ExampleCountAggregateOutputType> : number>('Example', `${endpoint}/example/count`, args, options);
 }

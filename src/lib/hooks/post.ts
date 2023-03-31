@@ -8,7 +8,7 @@ import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 export function useCreatePost(options?: Omit<UseMutationOptions<Post, unknown, Prisma.PostCreateArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.postMutation<Prisma.PostCreateArgs, Post>('Post', `${endpoint}/Post/create`, options, invalidateQueries)
+        request.postMutation<Prisma.PostCreateArgs, Post>('Post', `${endpoint}/post/create`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -25,25 +25,45 @@ export function useCreatePost(options?: Omit<UseMutationOptions<Post, unknown, P
     return mutation;
 }
 
+export function useCreateManyPost(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.PostCreateManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
+    const { endpoint } = useContext(RequestHandlerContext);
+    const _mutation =
+        request.postMutation<Prisma.PostCreateManyArgs, Prisma.BatchPayload>('Post', `${endpoint}/post/createMany`, options, invalidateQueries)
+        ;
+    const mutation = {
+        ..._mutation,
+        async mutateAsync<T extends Prisma.PostCreateManyArgs>(
+            args: Prisma.SelectSubset<T, Prisma.PostCreateManyArgs>,
+            options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.SelectSubset<T, Prisma.PostCreateManyArgs>>, 'mutationFn'>
+        ) {
+            return (await _mutation.mutateAsync(
+                args,
+                options as any
+            )) as Prisma.BatchPayload;
+        },
+    };
+    return mutation;
+}
+
 export function useFindManyPost<T extends Prisma.PostFindManyArgs>(args?: Prisma.SelectSubset<T, Prisma.PostFindManyArgs>, options?: UseQueryOptions<Array<Prisma.PostGetPayload<T>>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Array<Prisma.PostGetPayload<T>>>('Post', `${endpoint}/Post/findMany`, args, options);
+    return request.query<Array<Prisma.PostGetPayload<T>>>('Post', `${endpoint}/post/findMany`, args, options);
 }
 
 export function useFindUniquePost<T extends Prisma.PostFindUniqueArgs>(args: Prisma.SelectSubset<T, Prisma.PostFindUniqueArgs>, options?: UseQueryOptions<Prisma.PostGetPayload<T>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Prisma.PostGetPayload<T>>('Post', `${endpoint}/Post/findUnique`, args, options);
+    return request.query<Prisma.PostGetPayload<T>>('Post', `${endpoint}/post/findUnique`, args, options);
 }
 
 export function useFindFirstPost<T extends Prisma.PostFindFirstArgs>(args?: Prisma.SelectSubset<T, Prisma.PostFindFirstArgs>, options?: UseQueryOptions<Prisma.PostGetPayload<T>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Prisma.PostGetPayload<T>>('Post', `${endpoint}/Post/findFirst`, args, options);
+    return request.query<Prisma.PostGetPayload<T>>('Post', `${endpoint}/post/findFirst`, args, options);
 }
 
 export function useUpdatePost(options?: Omit<UseMutationOptions<Post, unknown, Prisma.PostUpdateArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.putMutation<Prisma.PostUpdateArgs, Post>('Post', `${endpoint}/Post/update`, options, invalidateQueries)
+        request.putMutation<Prisma.PostUpdateArgs, Post>('Post', `${endpoint}/post/update`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -63,7 +83,7 @@ export function useUpdatePost(options?: Omit<UseMutationOptions<Post, unknown, P
 export function useUpdateManyPost(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.PostUpdateManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.putMutation<Prisma.PostUpdateManyArgs, Prisma.BatchPayload>('Post', `${endpoint}/Post/updateMany`, options, invalidateQueries)
+        request.putMutation<Prisma.PostUpdateManyArgs, Prisma.BatchPayload>('Post', `${endpoint}/post/updateMany`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -83,7 +103,7 @@ export function useUpdateManyPost(options?: Omit<UseMutationOptions<Prisma.Batch
 export function useUpsertPost(options?: Omit<UseMutationOptions<Post, unknown, Prisma.PostUpsertArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.postMutation<Prisma.PostUpsertArgs, Post>('Post', `${endpoint}/Post/upsert`, options, invalidateQueries)
+        request.postMutation<Prisma.PostUpsertArgs, Post>('Post', `${endpoint}/post/upsert`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -103,7 +123,7 @@ export function useUpsertPost(options?: Omit<UseMutationOptions<Post, unknown, P
 export function useDeletePost(options?: Omit<UseMutationOptions<Post, unknown, Prisma.PostDeleteArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.deleteMutation<Prisma.PostDeleteArgs, Post>('Post', `${endpoint}/Post/delete`, options, invalidateQueries)
+        request.deleteMutation<Prisma.PostDeleteArgs, Post>('Post', `${endpoint}/post/delete`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -123,7 +143,7 @@ export function useDeletePost(options?: Omit<UseMutationOptions<Post, unknown, P
 export function useDeleteManyPost(options?: Omit<UseMutationOptions<Prisma.BatchPayload, unknown, Prisma.PostDeleteManyArgs>, 'mutationFn'>, invalidateQueries: boolean = true) {
     const { endpoint } = useContext(RequestHandlerContext);
     const _mutation =
-        request.deleteMutation<Prisma.PostDeleteManyArgs, Prisma.BatchPayload>('Post', `${endpoint}/Post/deleteMany`, options, invalidateQueries)
+        request.deleteMutation<Prisma.PostDeleteManyArgs, Prisma.BatchPayload>('Post', `${endpoint}/post/deleteMany`, options, invalidateQueries)
         ;
     const mutation = {
         ..._mutation,
@@ -142,7 +162,7 @@ export function useDeleteManyPost(options?: Omit<UseMutationOptions<Prisma.Batch
 
 export function useAggregatePost<T extends Prisma.PostAggregateArgs>(args: Prisma.SelectSubset<T, Prisma.PostAggregateArgs>, options?: UseQueryOptions<Prisma.GetPostAggregateType<T>>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<Prisma.GetPostAggregateType<T>>('Post', `${endpoint}/Post/aggregate`, args, options);
+    return request.query<Prisma.GetPostAggregateType<T>>('Post', `${endpoint}/post/aggregate`, args, options);
 }
 
 export function useGroupByPost<T extends Prisma.PostGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: Prisma.UserGroupByArgs['orderBy'] } : { orderBy?: Prisma.UserGroupByArgs['orderBy'] }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.TupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True
@@ -188,10 +208,10 @@ export function useGroupByPost<T extends Prisma.PostGroupByArgs, HasSelectOrTake
         : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
     }[OrderFields]>(args: Prisma.SelectSubset<T, Prisma.SubsetIntersection<T, Prisma.PostGroupByArgs, OrderByArg> & InputErrors>, options?: UseQueryOptions<{} extends InputErrors ? Prisma.GetPostGroupByPayload<T> : InputErrors>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<{} extends InputErrors ? Prisma.GetPostGroupByPayload<T> : InputErrors>('Post', `${endpoint}/Post/groupBy`, args, options);
+    return request.query<{} extends InputErrors ? Prisma.GetPostGroupByPayload<T> : InputErrors>('Post', `${endpoint}/post/groupBy`, args, options);
 }
 
 export function useCountPost<T extends Prisma.PostCountArgs>(args?: Prisma.SelectSubset<T, Prisma.PostCountArgs>, options?: UseQueryOptions<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.PostCountAggregateOutputType> : number>) {
     const { endpoint } = useContext(RequestHandlerContext);
-    return request.query<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.PostCountAggregateOutputType> : number>('Post', `${endpoint}/Post/count`, args, options);
+    return request.query<T extends { select: any; } ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], Prisma.PostCountAggregateOutputType> : number>('Post', `${endpoint}/post/count`, args, options);
 }

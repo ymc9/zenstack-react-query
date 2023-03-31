@@ -66,11 +66,18 @@ const Posts = ({ user }: { user: AuthUser }) => {
     }
   }
 
-  async function onTogglePublished(post: Post) {
-    await update.mutateAsync({
-      where: { id: post.id },
-      data: { published: !post.published },
-    });
+  function onTogglePublished(post: Post) {
+    update.mutate(
+      {
+        where: { id: post.id },
+        data: { published: !post.published },
+      },
+      {
+        onSuccess: (data) => {
+          console.log("Updated succeeded:", data);
+        },
+      }
+    );
   }
 
   async function onDelete(post: Post) {
